@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#define TOT 2000
 
 typedef struct{ //DEFINIZIONE CARTA
     int valore;
@@ -26,6 +27,7 @@ typedef Giocatore * Giocatori;
 typedef struct EP{ //DEFINIZIONE LISTA TURNO (Turno include giocatori + carte sul tavolo)
     Giocatori g;
     Carta t[5];
+    int piatto;
     struct EP * next;
 }Turno;
 typedef Turno * Partita;
@@ -56,11 +58,49 @@ int vincitoreTurno(Partita p);
 int numGiocatori(Partita p);
 void creaMazzo(Carta mazzo[]);
 void pescaCarte(Carta mazzo[],Carta mano[],int quanteCarte);
+Partita creaPartita(Partita p);
+Giocatori creaGiocatori(Giocatori g);
+Giocatori insGiocatore(Giocatori g,int num);
 
 int main()
 {
-    
+    int menu=1;
+    int num;
+    Partita p=NULL;
+    Carta mazzo[52];
+    creaMazzo(mazzo);
     return 0;
+}
+Partita creaPartita(Partita p)
+{
+    Partita q;
+    Giocatori g=NULL;
+    q=(Partita)malloc(sizeof(Turno));
+    q->piatto=0;
+    g=creaGiocatori(g);
+    q->g=g;
+    q->next=p;
+    return q;
+}
+Giocatori creaGiocatori(Giocatori g)
+{
+    int i,quantiGiocatori;
+    printf("Quanti giocatori?\n");
+    scanf("%d",&quantiGiocatori);
+    for(i=quantiGiocatori;i>0;i--){
+        g=insGioc(g,i);
+    }
+    return g;
+}
+Giocatori insGiocatore(Giocatori g,int num)
+{
+    Giocatori q;
+    q->numGiocatore=num;
+    q->soldi=TOT;
+    q->punti.combinazione=0;
+    q->punti.valore=0;
+    q->next=g;
+    return q;
 }
 
 int vincitoreTurno(Partita p) //Dato un turno, restituisce il numero del giocatore vincente
