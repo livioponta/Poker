@@ -3,33 +3,35 @@
 #include <string.h>
 #include <time.h>
 
-typedef struct{
+typedef struct{ //DEFINIZIONE CARTA
     int valore;
     char nome;
     char seme;
 }Carta;
 
+typedef struct{ //DEFINIZIONE PUNTEGGIO (= Definito per creare gerarchia tra combinazini)
+    int combinazione; //Dipende 1) Dalla combinazione (0-8) 2) Dalle carte coinvolte
+    int valore;
+}Punteggio;
 
-typedef struct EM{
+typedef struct EM{ //DEFINIZIONE LISTA GIOCATORI
     Carta c1,c2;
     int numGiocatore;
+    int soldi; //Definiti all'inizio della partita
+    Punteggio punti; //0 fino a river, Poi punteggio definito da combinazioni, 0 per i giocatori in fold
     struct EM * next;
 }Giocatore;
 typedef Giocatore * Giocatori;
 
-typedef struct EP{
+typedef struct EP{ //DEFINIZIONE LISTA TURNO (Turno include giocatori + carte sul tavolo)
     Giocatori g;
     Carta t[5];
     struct EP * next;
 }Turno;
 typedef Turno * Partita;
 
-typedef struct{
-    int combinazione;
-    int valore;
-}Punteggio;
 
-
+//PROTOTIPI FUNZIONI
 
 Partita insTurno(Partita p);
     Giocatori insGiocatore(Giocatori g,int num);
@@ -61,8 +63,8 @@ int main()
     return 0;
 }
 
-int vincitoreTurno(Partita p)
-{
+int vincitoreTurno(Partita p) //Dato un turno, restituisce il numero del giocatore vincente
+{                               //Da rivedere
     int i;
     Punteggio * punteggi;
     Punteggio maxPunteggio;
@@ -88,8 +90,9 @@ int vincitoreTurno(Partita p)
     }
     return win;
 }
-Punteggio puntiMano(Giocatori g,Carta tavolo[5])
-{
+
+Punteggio puntiMano(Giocatori g,Carta tavolo[5]) //Restituisce la struct Punteggio corrispondente alla mano + carte in tavola di un giocatore
+{                                               //Da rivedere (interazione giocatori) (riconoscere giocatori in fold)
     int i;
     Punteggio punti;
     Carta tot[7];
@@ -134,7 +137,9 @@ Punteggio puntiMano(Giocatori g,Carta tavolo[5])
         punti.valore=scalaColore(tot);
     }
 }
-int cartaAlta(Carta mano[])
+
+//Funzioni combinazioni
+int cartaAlta(Carta mano[]) 
 {
     int max,i;
     for(i=0;i<7;i++){
@@ -218,10 +223,34 @@ int tris(Carta mano[])
     }
     return max;
 }
-int scala(Carta mano[])
-{
 
+int trovaCarta(Carta mano[], int val) //Da segnare in prototipi
+{
+    int i;
+    for(i=0;i<7;i++){
+        if(mano[i].valore==val)
+            return 1;
+    }
+    return 0;
 }
+
+int scala(Carta mano[]) //Da segnare in prototipi
+{
+int i=0,status=0;
+while(status<4 && i<7){
+    if(trovaCarta(mano,carta[i].valore + status)==1)
+        status++;
+    else{
+        i++;
+        status=0;
+    }
+}
+if(status==4)
+    return carta[i].valore + status;
+else
+    return 0;
+} 
+
 int colore(Carta mano[])
 {
     int i,cp=0,cf=0,cc=0,cq=0,max=0;
@@ -291,7 +320,10 @@ int poker(Carta mano[])
 }
 int scalaColore(Carta mano[]);
 
-void creaMazzo(Carta mazzo[])
+
+//FINE FUNZIONI COMBINAZIONI
+
+void creaMazzo(Carta mazzo[]) //Crea una lista mazzo ordinata
 {
     int i,j,count=0;
     for(i=1;i<14;i++){
@@ -321,8 +353,23 @@ void creaMazzo(Carta mazzo[])
         }
     }
 }
-void pescaCarte(Carta mazzo[],Carta mano[],int quanteCarte)
-{
+
+void mischia(Carta mazzo[], size_t n) //Mischia la lista mazzo iniziale ordinata
+{                                     //Poi sarà sempre disordinata
+    if (n > 1) {
+        size_t i,j;
+        Carta t;
+        for (i = 0; i < n - 1; i++){
+          j = i + rand() / (RAND_MAX / (n - i) + 1);
+          t = mazzo[j];
+          mazzo[j] = mazzo[i];
+          mazzo[i] = t;
+        }
+    }
+}
+
+void pescaCarte(Carta mazzo[],Carta mano[],int n) //Pesca le prime n carte del mazzo e sposta le altre in avanti
+{                                                 //Da modificare per tenere shuffle e pescare e sostituire le prime carte
     int r,i,j,f;
     srand(time(0));
     do{
@@ -339,8 +386,9 @@ void pescaCarte(Carta mazzo[],Carta mano[],int quanteCarte)
         }
     }while(f==0);
 }
-int numGiocatori(Partita p)
-{
+
+int numGiocatori(Partita p) //Restituisce numero giocatori data una partita
+{           
     int count;
     while(p->g!=NULL){
         count++;
@@ -350,8 +398,8 @@ int numGiocatori(Partita p)
 }
 
 
-Partita insTurno(Partita p)
-{
+Partita insTurno(Partita p) //Inserisce manualmente un turno
+{                           //Da rivedere
     Partita q;
     int f=1,count=1;
     printf("\nInserimento del Turno:\n\n");
@@ -367,8 +415,9 @@ Partita insTurno(Partita p)
     q->next=p;
     return q;
 }
-Giocatori insGiocatore(Giocatori g,int num)
-{
+
+Giocatori insGiocatore(Giocatori g,int num) //Inserisce manualmente un giocatore
+{                                           //Da rivedere
     Giocatori q;
     q=(Giocatori)malloc(sizeof(Giocatore));
     printf("Inserisci la prima carta\n");
@@ -385,7 +434,8 @@ Giocatori insGiocatore(Giocatori g,int num)
     temp->next=q;
     return g;
 }
-void insTavolo(Carta c[])
+
+void insTavolo(Carta c[]) //Inserisce manualmente le carte sul tavolo (Utile per test)
 {
     int i;
     for(i=0;i<5;i++){
@@ -398,7 +448,8 @@ void insTavolo(Carta c[])
         c[i]=scanCarta();
     }
 }
-Carta scanCarta()
+
+Carta scanCarta() //Scannerizza una carta manualmente (Utile per test)
 {
     Carta c;
     do{
@@ -429,8 +480,11 @@ Carta scanCarta()
         c.nome='K';
     return c;
 }
-void printTurno(Partita p)
-{
+
+//FUNZIONI DI STAMPA
+
+void printTurno(Partita p) //Stampa a schermo un turno
+{                           //Da rivedere (es. aggiungere soldi giocatori)
     int i;
     printf("Tavolo:\n");
     for(i=0;i<5;i++){
@@ -448,7 +502,8 @@ void printTurno(Partita p)
     }
     printf("\n\n");
 }
-void printCarta(Carta c)
-{
+
+void printCarta(Carta c) //Stampa una carta
+{                       //Da migliorare per feedback visivo
     printf("%c%c",c.nome,c.seme);
 }
