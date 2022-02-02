@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 typedef struct{
     int valore;
@@ -51,26 +52,15 @@ int vincitoreTurno(Partita p);
         int scalaColore(Carta mano[]);
 
 int numGiocatori(Partita p);
+void creaMazzo(Carta mazzo[]);
+void pescaCarte(Carta mazzo[],Carta mano[],int quanteCarte);
 
 int main()
 {
-    int menu=1;
-    Partita par;
-    while(menu!=0){
-        printf("Per inserire un turno premere 1;\nPer uscire premere 0.\n");
-        scanf("%d",&menu);
-        switch(menu){
-        case 1:
-            par=insTurno(par);
-            printTurno(par);
-            break;
-        case 0:
-            break;
-        }
-    }
-
+    
     return 0;
 }
+
 int vincitoreTurno(Partita p)
 {
     int i;
@@ -300,6 +290,55 @@ int poker(Carta mano[])
     return 0;
 }
 int scalaColore(Carta mano[]);
+
+void creaMazzo(Carta mazzo[])
+{
+    int i,j,count=0;
+    for(i=1;i<14;i++){
+        for(j=1;j<5;j++){
+            mazzo[count].valore=i;
+            if(j==1)
+                mazzo[count].seme='c';
+            if(j==2)
+                mazzo[count].seme='q';
+            if(j==3)
+                mazzo[count].seme='f';
+            if(j==4)
+                mazzo[count].seme='p';
+            if(mazzo[count].valore>=2 && mazzo[count].valore<=9)
+                mazzo[count].nome='0'+mazzo[count].valore;
+            if(mazzo[count].valore==1)
+                mazzo[count].nome='A';
+            if(mazzo[count].valore==10)
+                mazzo[count].nome='T';
+            if(mazzo[count].valore==11)
+                mazzo[count].nome='J';
+            if(mazzo[count].valore==12)
+                mazzo[count].nome='Q';
+            if(mazzo[count].valore==13)
+                mazzo[count].nome='K';
+            count++;
+        }
+    }
+}
+void pescaCarte(Carta mazzo[],Carta mano[],int quanteCarte)
+{
+    int r,i,j,f;
+    srand(time(0));
+    do{
+        f=1;
+        for(i=0;i<quanteCarte;i++){
+            r=rand()%52;
+            mano[i]=mazzo[r];
+        }
+        for(i=0;i<quanteCarte;i++){
+            for(j=0;j<quanteCarte;j++){
+                if(mano[i].valore==mano[j].valore && mano[i].seme==mano[i].seme && i!=j)
+                    f=0;
+            }
+        }
+    }while(f==0);
+}
 int numGiocatori(Partita p)
 {
     int count;
@@ -390,8 +429,6 @@ Carta scanCarta()
         c.nome='K';
     return c;
 }
-
-
 void printTurno(Partita p)
 {
     int i;
