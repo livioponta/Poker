@@ -12,6 +12,7 @@
 Giocatori insGiocatore(Giocatori g,int num)
 {
     Giocatori q;
+    q=(Giocatori)malloc(sizeof(Giocatore));
     q->numGiocatore=num;
     q->soldi=TOT;
     q->punti.combinazione=0;
