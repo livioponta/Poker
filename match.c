@@ -12,9 +12,10 @@
 int numGiocatori(Partita p) //Restituisce numero giocatori data una partita
 {
     int count;
-    while(p->g!=NULL){
+    Giocatori temp=p->g;
+    while(temp!=NULL){
         count++;
-        p->g=p->g->next;
+        temp=temp->next;
     }
     return count;
 }
@@ -156,4 +157,34 @@ int vincitoreTurno(Partita p) //Dato un turno, restituisce il numero del giocato
         }
     }
     return win;
+}
+
+void distribuisciCarte(Partita p,Carta mazzo[52])
+{
+    int c=0;
+    Giocatori temp=p->g;
+    while(temp!=NULL){
+        temp->c1=mazzo[c];
+        c++;
+        temp->c2=mazzo[c];
+        c++;
+        temp=temp->next;
+    }
+}
+void distribuisciFlop(Partita p,Carta mazzo[])
+{
+    int num=numGiocatori(p),i;
+    for(i=0;i<3;i++){
+        p->t[i]=mazzo[num*2+i];
+    }
+}
+void distribuisciTurn(Partita p,Carta mazzo[])
+{
+    int num=numGiocatori(p);
+    p->t[3]=mazzo[num*2+3];
+}
+void distribuisciRiver(Partita p,Carta mazzo[])
+{
+    int num=numGiocatori(p);
+    p->t[4]=mazzo[num*2+4];
 }
