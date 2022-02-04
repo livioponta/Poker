@@ -7,7 +7,9 @@
 #include "prematch.h"
 #include "match.h"
 
-void printTurno(Partita p);
+void printPartita(Partita p);
+void printGiocatori(Giocatori g);
+void printTavolo(Carta tavolo[]);
 void printCarta(Carta c);
 
 #endif // OUTPUT_H_INCLUDED
