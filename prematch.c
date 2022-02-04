@@ -9,18 +9,25 @@
 #include "test.h"
 #include "match.h"
 
-Giocatori insGiocatore(Giocatori g,int num)
+
+
+Partita creaPartita(Partita p)
 {
-    Giocatori q;
-    q=(Giocatori)malloc(sizeof(Giocatore));
-    q->numGiocatore=num;
-    q->soldi=TOT;
-    q->punti.combinazione=0;
-    q->punti.valore=0;
-    q->next=g;
+    int i;
+    Partita q;
+    Giocatori g=NULL;
+    q=(Partita)malloc(sizeof(Turno));
+    q->piatto=0;
+    g=creaGiocatori(g);
+    q->g=g;
+    for(i=0;i<5;i++){
+        q->t[i].nome='-';
+        q->t[i].seme='-';
+        q->t[i].valore=0;
+    }
+    q->next=p;
     return q;
 }
-
 Giocatori creaGiocatori(Giocatori g)
 {
     int i,quantiGiocatori;
@@ -31,15 +38,21 @@ Giocatori creaGiocatori(Giocatori g)
     }
     return g;
 }
-
-Partita creaPartita(Partita p)
+Giocatori insGiocatore(Giocatori g,int num)
 {
-    Partita q;
-    Giocatori g=NULL;
-    q=(Partita)malloc(sizeof(Turno));
-    q->piatto=0;
-    g=creaGiocatori(g);
-    q->g=g;
-    q->next=p;
+    Giocatori q;
+    q=(Giocatori)malloc(sizeof(Giocatore));
+    q->numGiocatore=num;
+    q->soldi=TOT;
+    q->puntata=0;
+    q->punti.combinazione=0;
+    q->punti.valore=0;
+    q->c1.nome='-';
+    q->c1.seme='-';
+    q->c1.valore=0;
+    q->c2.nome='-';
+    q->c2.seme='-';
+    q->c2.valore=0;
+    q->next=g;
     return q;
 }
