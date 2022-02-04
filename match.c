@@ -23,7 +23,7 @@ int numGiocatori(Partita p) //Restituisce numero giocatori data una partita
 void creaMazzo(Carta mazzo[]) //Crea una lista mazzo ordinata
 {
     int i,j,count=0;
-    for(i=1;i<14;i++){
+    for(i=2;i<15;i++){
         for(j=1;j<5;j++){
             mazzo[count].valore=i;
             if(j==1)
@@ -36,7 +36,7 @@ void creaMazzo(Carta mazzo[]) //Crea una lista mazzo ordinata
                 mazzo[count].seme=6;
             if(mazzo[count].valore>=2 && mazzo[count].valore<=9)
                 mazzo[count].nome='0'+mazzo[count].valore;
-            if(mazzo[count].valore==1)
+            if(mazzo[count].valore==14)
                 mazzo[count].nome='A';
             if(mazzo[count].valore==10)
                 mazzo[count].nome='T';
@@ -116,19 +116,19 @@ Punteggio puntiMano(Giocatori g,Carta tavolo[5]) //Restituisce la struct Puntegg
     if(colore(tot)){
         punti.combinazione=5;
         punti.valore=colore(tot);
-    }/*
+    }
     if(full(tot)){
         punti.combinazione=6;
         punti.valore=full(tot);
-    }*/
+    }
     if(poker(tot)){
         punti.combinazione=7;
         punti.valore=poker(tot);
-    }/*
+    }
     if(scalaColore(tot)){
         punti.combinazione=8;
         punti.valore=scalaColore(tot);
-    }*/
+    }
 }
 
 int vincitoreTurno(Partita p) //Dato un turno, restituisce il numero del giocatore vincente
