@@ -11,28 +11,32 @@
 
 //FUNZIONI DI STAMPA
 
-void printTurno(Partita p) //Stampa a schermo un turno
-{                           //Da rivedere (es. aggiungere soldi giocatori)
-    int i;
-    printf("Tavolo:\n");
-    for(i=0;i<5;i++){
-        printCarta(p->t[i]);
-        printf("-");
-    }
-    printf("\b\n\n");
-    printf("Mani dei Giocatori:\n");
-    while(p->g!=NULL){
-        printCarta(p->g->c1);
-        printf("-");
-        printCarta(p->g->c2);
-        printf("  ");
-        p->g=p->g->next;
-    }
-    printf("\n\n");
+void printPartita(Partita p)
+{
+    printf("-----------------------------------\n\n");
+    printGiocatori(p->g);
+    printf("\nPiatto: %d\n\n",p->piatto);
+    printTavolo(p->t);
+    printf("\n");
 }
-
-void printCarta(Carta c) //Stampa una carta
-{                       //Da migliorare per feedback visivo
+void printGiocatori(Giocatori g)
+{
+    while(g!=NULL){
+        printf("Giocatore %d: (%c%c,%c%c) Soldi:%d  Puntata: %d\n\n",g->numGiocatore,g->c1.nome,g->c1.seme,g->c2.nome,g->c2.seme,g->soldi,g->puntata);
+        g=g->next;
+    }
+}
+void printTavolo(Carta tavolo[])
+{
+    int i;
+    printf("Tavolo:  ");
+    for(i=0;i<5;i++){
+        printCarta(tavolo[i]);
+        printf(" ");
+    }
+}
+void printCarta(Carta c)
+{
     printf("%c%c",c.nome,c.seme);
 }
 
