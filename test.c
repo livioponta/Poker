@@ -48,7 +48,7 @@ Carta scanCarta() //Scannerizza una carta manualmente (Utile per test)
         printf("Inserisci il valore della carta: ");
         scanf("%d",&c.valore);
         fflush(stdin);
-    }while(c.valore<1 || c.valore>13);
+    }while(c.valore<2 || c.valore>14);
 
     do{
         printf("Inserisci il seme della carta: ");
@@ -56,10 +56,8 @@ Carta scanCarta() //Scannerizza una carta manualmente (Utile per test)
         scanf("%c",&c.seme);
         fflush(stdin);
     }while(c.seme!='c' && c.seme!='q' && c.seme!='f' && c.seme!='p');
-
-    printf("Inserisci il seme della carta: ");
-    scanf("%c",&c.seme);
-    fflush(stdin);
+    
+    //Conversione valore carta
     if(c.valore>=2 && c.valore<=10)
         c.nome='0'+c.valore;
     if(c.valore==1)
@@ -70,5 +68,15 @@ Carta scanCarta() //Scannerizza una carta manualmente (Utile per test)
         c.nome='Q';
     if(c.valore==13)
         c.nome='K';
+    
+    //Conversione seme carta
+    if(c.seme=='c')
+        c.seme=3;
+    if(c.seme=='q')
+        c.seme=4;
+    if(c.seme=='f')
+        c.seme=5;
+    if(c.seme=='p')
+        c.seme=6
     return c;
 }
