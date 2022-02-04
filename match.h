@@ -16,4 +16,9 @@ void pescaCarte(Carta mazzo[],Carta mano[],int quanteCarte);
 Punteggio puntiMano(Giocatori g,Carta tavolo[5]);
 int vincitoreTurno(Partita p);
 
+void distribuisciCarte(Partita p,Carta mazzo[]);
+void distribuisciFlop(Partita p,Carta mazzo[]);
+void distribuisciTurn(Partita p,Carta mazzo[]);
+void distribuisciRiver(Partita p,Carta mazzo[]);
+
 #endif // MATCH_H_INCLUDED
