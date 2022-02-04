@@ -126,18 +126,18 @@ int colore(Carta mano[])
 {
     int i,cp=0,cf=0,cc=0,cq=0,max=0;
     for(i=0;i<7;i++){
-        if(mano[i].seme=='p')
+        if(mano[i].seme==6)
             cp++;
-        if(mano[i].seme=='f')
+        if(mano[i].seme==5)
             cf++;
-        if(mano[i].seme=='c')
+        if(mano[i].seme==3)
             cc++;
-        if(mano[i].seme=='q')
+        if(mano[i].seme==4)
             cq++;
     }
     if(cp>4)
         for(i=0;i<7;i++){
-            if(mano[i].valore>max && mano[i].seme=='p')
+            if(mano[i].valore>max && mano[i].seme==6)
                 max=mano[i].valore;
             if(mano[i].valore==1)
                 max=14;
@@ -145,7 +145,7 @@ int colore(Carta mano[])
     return max;
     if(cf>4)
         for(i=0;i<7;i++){
-            if(mano[i].valore>max && mano[i].seme=='f')
+            if(mano[i].valore>max && mano[i].seme==5)
                 max=mano[i].valore;
             if(mano[i].valore==1)
                 max=14;
@@ -153,7 +153,7 @@ int colore(Carta mano[])
     return 100+max;
     if(cq>4)
         for(i=0;i<7;i++){
-            if(mano[i].valore>max && mano[i].seme=='q')
+            if(mano[i].valore>max && mano[i].seme==4)
                 max=mano[i].valore;
             if(mano[i].valore==1)
                 max=14;
@@ -161,7 +161,7 @@ int colore(Carta mano[])
     return 200+max;
     if(cc>4)
         for(i=0;i<7;i++){
-            if(mano[i].valore>max && mano[i].seme=='c')
+            if(mano[i].valore>max && mano[i].seme==3)
                 max=mano[i].valore;
             if(mano[i].valore==1)
                 max=14;
