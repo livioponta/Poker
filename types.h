@@ -16,6 +16,7 @@ typedef struct EM{ //DEFINIZIONE LISTA GIOCATORI
     Carta c1,c2;
     int numGiocatore;
     int soldi; //Definiti all'inizio della partita
+    int puntata;
     Punteggio punti; //0 fino a river, Poi punteggio definito da combinazioni, 0 per i giocatori in fold
     struct EM * next;
 }Giocatore;
