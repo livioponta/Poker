@@ -53,7 +53,6 @@ Giocatori insGiocatore(Giocatori g,int num)
     q->c2.nome='-';
     q->c2.seme='-';
     q->c2.valore=0;
-    q->fold=0;
     q->next=g;
     return q;
 }
