@@ -26,13 +26,13 @@ void creaMazzo(Carta mazzo[]) //Crea una lista mazzo ordinata
         for(j=1;j<5;j++){
             mazzo[count].valore=i;
             if(j==1)
-                mazzo[count].seme='c';
+                mazzo[count].seme=3;
             if(j==2)
-                mazzo[count].seme='q';
+                mazzo[count].seme=4;
             if(j==3)
-                mazzo[count].seme='f';
+                mazzo[count].seme=5;
             if(j==4)
-                mazzo[count].seme='p';
+                mazzo[count].seme=6;
             if(mazzo[count].valore>=2 && mazzo[count].valore<=9)
                 mazzo[count].nome='0'+mazzo[count].valore;
             if(mazzo[count].valore==1)
@@ -51,7 +51,7 @@ void creaMazzo(Carta mazzo[]) //Crea una lista mazzo ordinata
 }
 
 void mischia(Carta mazzo[], size_t n) //Mischia la lista mazzo iniziale ordinata
-{                                     //Poi sarà sempre disordinata
+{                                     //Poi sarÃ  sempre disordinata
     if (n > 1) {
         size_t i,j;
         Carta t;
