@@ -16,23 +16,23 @@ N.B. I punteggi non sono visibili in gioco
 
 **COMBINAZIONI CON MENO DI 5 CARTE**
 
-**-Carta alta
-Punti combinazione:** 0
+**-Carta alta**
+Punti combinazione: 0
 
-**-Coppia
-Punti combinazione:** 1
+**-Coppia**
+Punti combinazione: 1
 
-**-Doppia Coppia
-Punti combinazione:** 2
+**-Doppia Coppia**
+Punti combinazione: 2
 
-**-Tris
-Punti combinazione:** 3
+**-Tris**
+Punti combinazione: 3
 
 **COMBINAZIONI CON 5 CARTE**
 
-**-Scala
-Punti combinazione:** 4
-**Punti carte:**
+**-Scala**
+Punti combinazione: 4
+Punti carte:
 (5-14) corrispondono al valore della carta più alta della scala
 
 -**Colore
