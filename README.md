@@ -33,26 +33,26 @@ Punti combinazione: 3
 **-Scala** <br />
 Punti combinazione: 4 <br />
 Punti carte: <br />
--(5-14) corrispondono al valore della carta più alta della scala <br />
+*(5-14) corrispondono al valore della carta più alta della scala <br />
 
 **Colore** <br />
 Punti combinazione: 5 <br />
 Punti carte: <br />
--(6-314) corrispondono a (Fattore seme)*100 + (Valore carta più alta) <br />
--Fattore seme: 0 picche, 1 fiori, 2 quadri, 3 cuori <br />
+* (6-314) corrispondono a (Fattore seme)*100 + (Valore carta più alta) <br />
+* Fattore seme: 0 picche, 1 fiori, 2 quadri, 3 cuori <br />
 
 **Full** <br />
 Punti combinazione: 6 <br />
 Punti carte: <br />
-(203-1413) corrispondono a (Valore carta tris)*100 + (Valore carta coppia) <br />
+* (203-1413) corrispondono a (Valore carta tris)*100 + (Valore carta coppia) <br />
 
 **Poker** <br />
 Punti combinazione: 7 <br />
 Punti carte: <br />
--(2-14) corrispondono al valore della carta del poker <br />
+* (2-14) corrispondono al valore della carta del poker <br />
 
 **Scala Colore** <br />
 Punti combinazione: 8 <br />
 Punti carte: <br />
--(5-14) corrispondono al valore della carta più alta della scala <br />
-!! Non si tiene conto del seme della scala colore in quanto è impossibile la presenza in contemporanea di scale reali con semi diversi !! <br />
+* (5-14) corrispondono al valore della carta più alta della scala <br />
+* Non si tiene conto del seme della scala colore in quanto è impossibile la presenza in contemporanea di scale reali con semi diversi <br />
