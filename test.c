@@ -80,3 +80,46 @@ Carta scanCarta() //Scannerizza una carta manualmente (Utile per test)
         c.seme=6
     return c;
 }
+
+void testPunteggio(Carta mano[]) //Da sistemare
+{
+    Punteggio punti;
+    if(cartaAlta(mano)){
+        punti.combinazione=0;
+        punti.valore=cartaAlta(mano);
+    }
+    if(coppia(mano)){
+        punti.combinazione=1;
+        punti.valore=coppia(mano);
+    }
+    if(doppiaCoppia(mano)){
+        punti.combinazione=2;
+        punti.valore=doppiaCoppia(mano);
+    }
+    if(tris(mano)){
+        punti.combinazione=3;
+        punti.valore=tris(mano);
+    }
+    if(scala(mano)){
+        punti.combinazione=4;
+        punti.valore=scala(mano);
+    }
+    if(colore(mano)){
+        punti.combinazione=5;
+        punti.valore=colore(mano);
+    }
+    if(full(mano)){
+        punti.combinazione=6;
+        punti.valore=full(mano);
+    }
+    if(poker(mano)){
+        punti.combinazione=7;
+        punti.valore=poker(mano);
+    }
+    if(scalaColore(mano)){
+        punti.combinazione=8;
+        punti.valore=scalaColore(mano);
+    }
+    printf("\nPunti comb: %d\nPunti carte: %d\n", punti.combinazione, punti.valore);
+}
+
