@@ -12,71 +12,49 @@
 //Funzioni combinazioni
 int cartaAlta(Carta mano[])
 {
-    int max,i;
+    int max=0,i;
     for(i=0;i<7;i++){
-        if(mano[i].valore==1)
-            return 14;
         if(mano[i].valore>max)
             max=mano[i].valore;
     }
     return max;
 }
+
 int coppia(Carta mano[])
 {
     int i,j;
     int max=0;
     for(i=0;i<7;i++){
         for(j=0;j<7;j++){
-            if(mano[i].valore==mano[j].valore && i!=j && (mano[i].valore>max || mano[i].valore==1)){
-                if(mano[i].valore==1)
-                    return 14;
+            if(mano[i].valore==mano[j].valore && i!=j && mano[i].valore>max){
                 max=mano[i].valore;
             }
         }
     }
     return max;
 }
+
 int doppiaCoppia(Carta mano[])
 {
-    int c1=0,c2=0,i,j;
-    for(i=0;i<7;i++){
-        for(j=0;j<7;j++){
-            if(mano[i].valore==mano[j].valore && i!=j){
-                if(c1==0){
-                    if(mano[i].valore==1)
-                        c1=14;
-                    c1=mano[i].valore;
+    int c1=0,c2=0,aux,i,j;
+    if(coppia(mano)){
+        for(i=0;i<7;i++){
+            for(j=0;j<7;j++){
+                if(mano[i].valore==mano[j].valore && i!=j && mano[i].valore>c2 && mano[i].valore!=c1){
+                    c2=mano[i].valore; //Inserisce una coppia in c2 se ha il valore maggiore del suo e diverso da c1
+                    if(c2>c1){
+                        aux=c2;
+                        c2=c1;
+                        c1=aux;  //Scambia c2 con c1 se è maggiore di quest'ultimo
+                    }
                 }
-
-                else if(c2==0){
-                    if(mano[i].valore==1)
-                        c2=14;
-                    c2=mano[i].valore;
-                }
-
-                else if(c1!=0 && c1<=c2 && (mano[i].valore>c1 || mano[i].valore==1)){
-                    if(mano[i].valore==1)
-                        c1=14;
-                    c1=mano[i].valore;
-                }
-
-                else if(c2!=0 && c2<c1 && (mano[i].valore>c1 || mano[i].valore==1)){
-                    if(mano[i].valore==1)
-                        c2=14;
-                    c2=mano[i].valore;
-                }
-
-
-
             }
         }
     }
     if(c1==0 || c2==0)
         return 0;
-    if(c1>c2)
-        return c2*100+c1;
     else
-        return c1*100+c2;
+        return c1*1000 + c2*10; //La coppia più alta è determinante
 }
 int tris(Carta mano[])
 {
@@ -84,43 +62,69 @@ int tris(Carta mano[])
     for(i=0;i<7;i++){
         for(j=0;j<7;j++){
             for(k=0;k<7;k++){
-                if(mano[i].valore==mano[j].valore && mano[j].valore==mano[k].valore && i!=j && i!=k && j!=k){
-                    if(mano[i].valore==1)
-                        return 14;
+                if(mano[i].valore==mano[j].valore && mano[j].valore==mano[k].valore && i!=j && j!=k && k!=i && mano[i].valore>max)
                     max=mano[i].valore;
-                }
             }
         }
     }
     return max;
 }
 
-int trovaCarta(Carta mano[], int val) //Da segnare in prototipi
+//Inizio scala
+int trovaCarta(Carta mano[], int val)
 {
     int i;
     for(i=0;i<7;i++){
-        if(mano[i].valore==val)
+        if(mano[i].valore==14 && val==1)
+            return 1;
+        if(mano[i].valore==val && val!=1)
             return 1;
     }
     return 0;
 }
 
-int scala(Carta mano[]) //Da segnare in prototipi
+void swap(Carta * c1, Carta * c2)
 {
-int i=0,status=0;
-while(status<4 && i<7){
-    if(trovaCarta(mano,mano[i].valore + status)==1)
-        status++;
-    else{
-        i++;
-        status=0;
+    Carta aux;
+    aux.valore=c1->valore;
+    c1->valore=c2->valore;
+    c2->valore=aux.valore;
+    aux.seme=c1->seme;
+    c1->seme=c2->seme;
+    c2->seme=aux.seme;
+    aux.nome=c1->nome;
+    c1->nome=c2->nome;
+    c2->nome=aux.nome;
+}
+
+void sort(Carta mano[]) //BubbleSort
+{
+    int i,j;
+    for(i=0;i<6;i++){
+        for(j=6;j>i;j--)
+            if(mano[j].valore > mano[j-1].valore)
+                swap(&mano[j],&mano[j-1]);
     }
 }
-if(status==4)
-    return mano[i].valore + status;
-else
-    return 0;
+
+int scala(Carta mano[])
+{
+    int i=0,status=0; //i posizione nell'array
+    sort(mano);       //Per selezionare la scala maggiore si fa riferimento a carte ordinate dal valore maggiore al minore
+    while(i<7 && status<4){
+        if(trovaCarta(mano, mano[i].valore - status) == 1)
+            status++;
+        else{
+            status=0;
+            i++;
+        }
+    }
+    if(status==4) //Quando status (completamento scala) arriva a 4 si ritorna il valore della scala (carta più alta)
+        return mano[i].valore;
+    else
+        return 0;
 }
+//Fine scala
 
 int colore(Carta mano[])
 {
@@ -135,7 +139,7 @@ int colore(Carta mano[])
         if(mano[i].seme==4)
             cq++;
     }
-    if(cp>4)
+    if(cp>4 && cf<5 && cq<5 && cc<5){
         for(i=0;i<7;i++){
             if(mano[i].valore>max && mano[i].seme==6)
                 max=mano[i].valore;
@@ -143,7 +147,8 @@ int colore(Carta mano[])
                 max=14;
         }
     return max;
-    if(cf>4)
+    }
+    if(cf>4 && cq<5 && cc<5){
         for(i=0;i<7;i++){
             if(mano[i].valore>max && mano[i].seme==5)
                 max=mano[i].valore;
@@ -151,7 +156,8 @@ int colore(Carta mano[])
                 max=14;
         }
     return 100+max;
-    if(cq>4)
+    }
+    if(cq>4 && cc<5){
         for(i=0;i<7;i++){
             if(mano[i].valore>max && mano[i].seme==4)
                 max=mano[i].valore;
@@ -159,17 +165,32 @@ int colore(Carta mano[])
                 max=14;
         }
     return 200+max;
-    if(cc>4)
+    }
+    if(cc>4){
         for(i=0;i<7;i++){
             if(mano[i].valore>max && mano[i].seme==3)
                 max=mano[i].valore;
-            if(mano[i].valore==1)
-                max=14;
         }
     return 300+max;
+    }
     return 0;
 }
-int full(Carta mano[]);
+int full(Carta mano[])
+{
+    int i,j,max=0;
+    if(tris(mano)){
+        for(i=0;i<7;i++){
+            for(j=0;j<7;j++){
+                if(mano[i].valore==mano[j].valore && i!=j && mano[i].valore!=tris(mano) && mano[i].valore>max)
+                    max=mano[i].valore;
+            }
+        }
+    }
+    if(max==0)
+        return 0;
+    else return 100*tris(mano) + max;
+}
+
 int poker(Carta mano[])
 {
     int i,j,h,k;
@@ -177,10 +198,8 @@ int poker(Carta mano[])
         for(j=0;j<7;j++){
             for(h=0;h<7;h++){
                 for(k=0;k<7;k++){
-                    if(mano[i].valore==mano[j].valore && mano[j].valore==mano[h].valore && mano[h].valore==mano[k].valore && i!=j && i!=h && i!=k
-                       && j!=h && j!=k && k!=h){
-                        if(mano[i].valore==1)
-                            return 14;
+                    if(mano[i].valore==mano[j].valore && mano[j].valore==mano[h].valore && mano[h].valore==mano[k].valore
+                       && i!=j && i!=h && i!=k && j!=h && j!=k && k!=h){
                         return mano[i].valore;
                     }
                 }
@@ -189,4 +208,35 @@ int poker(Carta mano[])
     }
     return 0;
 }
-int scalaColore(Carta mano[]);
+
+//Inizio scala colore
+int trovaCartaColore(Carta mano[], int val, char seed)
+{
+    int i;
+    for(i=0;i<7;i++){
+        if(mano[i].valore==14 && mano[i].seme==seed && val==1)
+            return 1;
+        if(mano[i].valore==val && mano[i].seme==seed && val!=1)
+            return 1;
+    }
+    return 0;
+}
+
+int scalaColore(Carta mano[]) //vd. Funzione scala
+{
+    int i=0,status=0;
+    sort(mano);
+    while(i<7 && status<4){
+        if(trovaCartaColore(mano,mano[i].valore - status, mano[i].seme)==1)
+            status++;
+        else{
+            i++;
+            status=0;
+        }
+    }
+    if(status==4)
+        return mano[i].valore;
+    else
+        return 0;
+}
+//Fine scala colore
