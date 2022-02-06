@@ -8,14 +8,14 @@ CheckSconfitta --> funzione eseguita a inizio turno --> Input: lista giocatori -
 Turno --> 3 Casi --> Fold, Check, Punta
 
 
-//COMBINAZIONI
 
 Combinazioni ordinate con delle struct Punteggio, in cui figura il punteggio della combinazione (Gerarchia combinazioni poker) (0-8)
 e quello delle carte (Per stabilire chi vince a parità di combinazione) (Variabile).
 N.B. I punteggi non sono visibili in gioco
 
-COMBINAZIONI CON MENO DI 5 CARTE (Bisogna considerare le carte extra se due combinazioni pareggiano)
-----------------------------------
+
+**COMBINAZIONI CON MENO DI 5 CARTE**
+
 **-Carta alta
 Punti combinazione:** 0
 
@@ -28,8 +28,8 @@ Punti combinazione:** 2
 **-Tris
 Punti combinazione:** 3
 
-COMBINAZIONI CON 5 CARTE
-----------------------------------
+**COMBINAZIONI CON 5 CARTE**
+
 **-Scala
 Punti combinazione:** 4
 **Punti carte:**
