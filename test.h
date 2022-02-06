@@ -10,5 +10,6 @@
 Partita insTurno(Partita p);
 void insTavolo(Carta c[]);
 Carta scanCarta();
+void testPunteggio(Carta mano[]);
 
 #endif // TEST_H_INCLUDED
