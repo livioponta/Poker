@@ -1,6 +1,7 @@
 # Poker
 
-//GIRO PARTITA
+Partita
+---------
 Vince alla fine chi ha più punti, chi folda/non chiama ha punteggio = -1, chi ha il punteggio = -1 salta il turno
 Buio --> funzione eseguita ogni inizio turno --> Input: lista giocatori, numero giocatori, puntata buio --> sottrae al giocatore del giro il buio a inizio turno
 CheckSconfitta --> funzione eseguita a inizio turno --> Input: lista giocatori --> se un giocatore arriva a 0 fiches, rimuove dalla lista
@@ -17,24 +18,33 @@ N.B. I punteggi non sono visibili in gioco
 
 **COMBINAZIONI CON MENO DI 5 CARTE**
 
-**-Carta alta**
-Punti combinazione: 0
+**Carta alta** <br />
+Punti combinazione: 0 <br />
+Punti carte:
+* (2-14) corrispondono al valore della carta alta
 
-**-Coppia**
-Punti combinazione: 1
+**Coppia** <br />
+Punti combinazione: 1 <br />
+Punti carte:
+* to do
+* 5 carte fuori dalla coppia da considerare
 
-**-Doppia Coppia**
-Punti combinazione: 2
+**Doppia Coppia** <br />
+Punti combinazione: 2 <br />
+* to do
+* 3 carte fuori dalla doppia coppia
 
-**-Tris**
+**Tris** <br />
 Punti combinazione: 3
+* to do
+* 4 carte fuori dal tris
 
 **COMBINAZIONI CON 5 CARTE**
 
 **Scala** <br />
 Punti combinazione: 4 <br />
 Punti carte: <br />
-*(5-14) corrispondono al valore della carta più alta della scala <br />
+* (5-14) corrispondono al valore della carta più alta della scala <br />
 
 **Colore** <br />
 Punti combinazione: 5 <br />
