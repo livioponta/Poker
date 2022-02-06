@@ -31,8 +31,8 @@ Punti combinazione: 3
 **COMBINAZIONI CON 5 CARTE**
 
 **-Scala**
-Punti combinazione: 4 \n
-Punti carte: \n
+Punti combinazione: 4 <br />
+Punti carte: <br />
 (5-14) corrispondono al valore della carta più alta della scala
 
 -**Colore
