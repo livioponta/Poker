@@ -188,3 +188,113 @@ void distribuisciRiver(Partita p,Carta mazzo[])
     int num=numGiocatori(p);
     p->t[4]=mazzo[num*2+4];
 }
+
+void giroPuntate(Partita p,int posIn,int sBlind)
+{
+    Giocatori temp=p->g;
+    int i;
+    for(i=0;i<posIn;i++){
+        temp=temp->next;
+    }
+    if(p->t[0].nome=='-'){
+        primaPunta(p->g,temp,sBlind);
+    }
+    else{
+        Punta(p->g,temp,sBlind,numGiocatori(p));
+    }
+    temp=p->g;
+    while(temp!=NULL){
+        p->piatto=p->piatto+temp->puntata;
+        temp->puntata=0;
+        temp=temp->next;
+    }
+}
+void Punta(Giocatori g,Giocatori temp,int sBlind,int numGioc)
+{
+    int maxPuntata=0,maxPuntataPrec=0,i=0,menu;
+    while(temp->puntata!=maxPuntata || i<numGioc){
+        if(temp->punti.combinazione!=-1){
+            do{
+            printf("Giocatore %d:\nPer chiamare %d premi 1;\nPer rialzare premi 2;\nPer foldare premi 0.\n\n",
+                   temp->numGiocatore,maxPuntata-temp->puntata);
+            scanf("%d",&menu);
+            }while(menu!=1&&menu!=2&&menu!=0);
+            switch(menu){
+                case 1:
+                    temp->soldi=temp->soldi-(maxPuntata-temp->puntata);
+                    temp->puntata=maxPuntata;
+                    break;
+                case 2:
+                    do{
+                    printf("A quanto vuoi rialzare?");
+                    scanf("%d",&maxPuntata);
+                    }while(maxPuntata<2*maxPuntataPrec);
+                    maxPuntataPrec=maxPuntata;
+                    temp->soldi=temp->soldi-(maxPuntata-temp->puntata);
+                    temp->puntata=maxPuntata;
+                    break;
+                case 0:
+                    temp->punti.combinazione=-1;
+            }
+        }
+        temp=temp->next;
+        if(temp==NULL){
+            temp=g;
+        }
+        i++;
+    }
+}
+void primaPunta(Giocatori g,Giocatori temp,int sBlind)
+{
+    int maxPuntata,maxPuntataPrec,menu;
+    temp->puntata=sBlind;
+    temp->soldi=temp->soldi-temp->puntata;
+    if(temp->next!=NULL){
+        temp=temp->next;
+        temp->puntata=2*sBlind;
+        temp->soldi=temp->soldi-temp->puntata;
+    }
+    else{
+        temp=g;
+        temp->puntata=sBlind;
+        temp->soldi=temp->soldi-temp->puntata;
+    }
+    if(temp->next!=NULL){
+        temp=temp->next;
+    }
+    else{
+        temp=g;
+    }
+    maxPuntata=2*sBlind;
+    maxPuntataPrec=maxPuntata;
+    while(temp->puntata!=maxPuntata){
+        if(temp->punti.combinazione!=-1){
+            do{
+            printf("Giocatore %d:\nPer chiamare %d premi 1;\nPer rialzare premi 2;\nPer foldare premi 0.\n\n",
+                   temp->numGiocatore,maxPuntata-temp->puntata);
+            scanf("%d",&menu);
+            }while(menu!=1&&menu!=2&&menu!=0);
+            switch(menu){
+                case 1:
+                    temp->soldi=temp->soldi-(maxPuntata-temp->puntata);
+                    temp->puntata=maxPuntata;
+                    break;
+                case 2:
+                    do{
+                    printf("A quanto vuoi rialzare?");
+                    scanf("%d",&maxPuntata);
+                    }while(maxPuntata<2*maxPuntataPrec);
+                    maxPuntataPrec=maxPuntata;
+                    temp->soldi=temp->soldi-(maxPuntata-temp->puntata);
+                    temp->puntata=maxPuntata;
+                    break;
+                case 0:
+                    temp->punti.combinazione=-1;
+            }
+        }
+        temp=temp->next;
+        if(temp==NULL){
+            temp=g;
+        }
+    }
+}
