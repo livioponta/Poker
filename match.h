@@ -21,4 +21,8 @@ void distribuisciFlop(Partita p,Carta mazzo[]);
 void distribuisciTurn(Partita p,Carta mazzo[]);
 void distribuisciRiver(Partita p,Carta mazzo[]);
 
+void giroPuntate(Partita p,int posIn,int sBlind);
+void primaPunta(Giocatori g,Giocatori temp,int sBlind);
+void Punta(Giocatori g,Giocatori temp,int sBlind,int numGioc);
+
 #endif // MATCH_H_INCLUDED
