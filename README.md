@@ -9,7 +9,11 @@ i soldi puntati, le carte in mano e il punteggio che deriva dalla sua combinazio
 
 Partita
 ---------
-
+* Bisogna creare il turno (Nodo della lista partita) per procedere ogni turno
+* Ogni turno, va ricreato il mazzo, creato da una funzione come un vettore ordinato di carte
+* Il mazzo viene mischiato da una funzione apposita
+* Le carte vengono distribuite a ogni giocatore
+* 
 
 Combinazioni
 --------------
