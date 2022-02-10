@@ -65,23 +65,19 @@ void mischia(Carta mazzo[], size_t n) //Mischia la lista mazzo iniziale ordinata
     }
 }
 
-void pescaCarte(Carta mazzo[],Carta mano[],int n) //Pesca le prime n carte del mazzo e sposta le altre in avanti
-{                                                 //Da modificare per tenere shuffle e pescare e sostituire le prime carte
-    int r,i,j,f;
-    srand(time(0));
-    do{
-        f=1;
-        for(i=0;i<n;i++){
-            r=rand()%52;
-            mano[i]=mazzo[r];
-        }
-        for(i=0;i<n;i++){
-            for(j=0;j<n;j++){
-                if(mano[i].valore==mano[j].valore && mano[i].seme==mano[i].seme && i!=j)
-                    f=0;
-            }
-        }
-    }while(f==0);
+
+Carta pesca(Carta mazzo[], Carta * mano, int n) //Pesca le prime n carte del mazzo e sposta le altre
+{
+    int i;
+    Carta temp;
+    temp=mazzo[0];
+    for(i=0;i<n;i++)
+        mano[i]=mazzo[i];
+    for(i=0;i<52-n;i++){
+        mazzo[i]=mazzo[i+1];
+    }
+
+    return temp;
 }
 
 Punteggio puntiMano(Carta mano[]) //Restituisce la struct Punteggio corrispondente a una mano di 7 carte
@@ -128,22 +124,22 @@ Punteggio puntiMano(Carta mano[]) //Restituisce la struct Punteggio corrisponden
     return punti;
 }
 
-Giocatori aggiornaPunteggio(Giocatori g, Carta tavolo[])
+Partita aggiornaPunteggio(Partita p)
 {
     Giocatori cur;
     Carta tot[7];
     Punteggio temp;
     int i;
-    cur=g;
+    cur=p->g;
 
     while(cur!=NULL){
-        if(g->punti.combinazione == -1){
+        if(cur->punti.combinazione == -1){
             cur->punti.combinazione=0;
             cur->punti.valore=0;
         }
         else{
             for(i=0;i<5;i++)
-                tot[i]=tavolo[i];
+                tot[i]=p->t[i];
             tot[5]=cur->c1;
             tot[6]=cur->c2;
             temp=puntiMano(tot);
@@ -153,7 +149,7 @@ Giocatori aggiornaPunteggio(Giocatori g, Carta tavolo[])
         cur=cur->next;
     }
 
-    return g;
+    return p;
 }
 
 Punteggio maxPunteggio(Partita p) //Dato un turno, restituisce il punteggio vincente
@@ -169,38 +165,35 @@ Punteggio maxPunteggio(Partita p) //Dato un turno, restituisce il punteggio vinc
         }
         if(cur->punti.combinazione == max.combinazione && cur->punti.valore > max.valore)
             max.valore=cur->punti.valore;
+        cur=cur->next;
     }
     return max;
 }
 
-void distribuisciCarte(Partita p,Carta mazzo[52])
+void distribuisciCarte(Partita p,Carta mazzo[])
 {
     int c=0;
     Giocatori temp=p->g;
     while(temp!=NULL){
-        temp->c1=mazzo[c];
-        c++;
-        temp->c2=mazzo[c];
-        c++;
+        pesca(mazzo,&temp->c1,1);
+        pesca(mazzo,&temp->c2,1);
         temp=temp->next;
     }
 }
+
 void distribuisciFlop(Partita p,Carta mazzo[])
 {
-    int num=numGiocatori(p),i;
-    for(i=0;i<3;i++){
-        p->t[i]=mazzo[num*2+i];
-    }
+    for(int i=0;i<3;i++)
+        pesca(mazzo,&p->t[i],1);
 }
 void distribuisciTurn(Partita p,Carta mazzo[])
 {
-    int num=numGiocatori(p);
-    p->t[3]=mazzo[num*2+3];
+    pesca(mazzo,&p->t[3],1);
 }
+
 void distribuisciRiver(Partita p,Carta mazzo[])
 {
-    int num=numGiocatori(p);
-    p->t[4]=mazzo[num*2+4];
+    pesca(mazzo,&p->t[4],1);
 }
 
 void giroPuntate(Partita p,int posIn,int sBlind)
