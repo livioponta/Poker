@@ -305,3 +305,25 @@ void primaPunta(Giocatori g,Giocatori temp,int sBlind)
         }
     }
 }
+
+Partita fineTurno(Partita p) //Funzione da implementare a fine turno
+{                           //Da il piatto al vincitore o lo divide tra i vincitori
+    Giocatori cur=p->g;
+    Punteggio max=maxPunteggio(p);
+    int div=0,premio;
+
+    while(cur!=NULL){
+        if(cur->punti.combinazione == max.combinazione && cur->punti.valore == max.valore)
+            div++;
+        cur=cur->next;
+    }
+    premio=p->piatto/div;
+    cur=p->g;
+    while(cur!=NULL){
+        if(cur->punti.combinazione == max.combinazione && cur->punti.valore == max.valore)
+            cur->soldi=cur->soldi+premio;
+        cur=cur->next;
+    }
+
+    return p;
+}
