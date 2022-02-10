@@ -13,7 +13,7 @@
 int cartaAlta(Carta mano[])
 {
     sort(mano); //Ritorna le prime 5 carte
-    return 100000*mano[0].valore + 1000*mano[1].valore + 100*mano[2].valore + 10*mano[3].valore + mano[4].valore;
+    return 10000*mano[0].valore + 1000*mano[1].valore + 100*mano[2].valore + 10*mano[3].valore + mano[4].valore;
 }
 
 int coppia(Carta mano[])
