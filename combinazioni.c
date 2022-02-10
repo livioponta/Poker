@@ -197,6 +197,9 @@ int full(Carta mano[])
             }
         }
     }
+    if(c==0 || t==0)
+        return 0;
+    
     return 10*t + c;
 }
 
