@@ -28,7 +28,7 @@ Partita insTurno(Partita p) //Inserisce manualmente un turno
 }
 
 void insTavolo(Carta c[]) //Inserisce manualmente le carte sul tavolo (Utile per test)
-{
+{                       //Da rivedere
     int i;
     for(i=0;i<5;i++){
         if(i==0)
@@ -56,11 +56,11 @@ Carta scanCarta() //Scannerizza una carta manualmente (Utile per test)
         scanf("%c",&c.seme);
         fflush(stdin);
     }while(c.seme!='c' && c.seme!='q' && c.seme!='f' && c.seme!='p');
-    
+
     //Conversione valore carta
     if(c.valore>=2 && c.valore<=10)
         c.nome='0'+c.valore;
-    if(c.valore==1)
+    if(c.valore==14)
         c.nome='A';
     if(c.valore==11)
         c.nome='J';
@@ -68,7 +68,7 @@ Carta scanCarta() //Scannerizza una carta manualmente (Utile per test)
         c.nome='Q';
     if(c.valore==13)
         c.nome='K';
-    
+
     //Conversione seme carta
     if(c.seme=='c')
         c.seme=3;
@@ -77,11 +77,11 @@ Carta scanCarta() //Scannerizza una carta manualmente (Utile per test)
     if(c.seme=='f')
         c.seme=5;
     if(c.seme=='p')
-        c.seme=6
+        c.seme=6;
     return c;
 }
 
-void testPunteggio(Carta mano[]) //Da sistemare
+void testPunteggio(Carta mano[])
 {
     Punteggio punti;
     if(cartaAlta(mano)){
@@ -122,4 +122,53 @@ void testPunteggio(Carta mano[]) //Da sistemare
     }
     printf("\nPunti comb: %d\nPunti carte: %d\n", punti.combinazione, punti.valore);
 }
+
+int trovaCarta(Carta mano[], int val)
+{
+    int i;
+    for(i=0;i<7;i++){
+        if(mano[i].valore==14 && val==1)
+            return 1;
+        if(mano[i].valore==val && val!=1)
+            return 1;
+    }
+    return 0;
+}
+
+void swap(Carta * c1, Carta * c2)
+{
+    Carta aux;
+    aux.valore=c1->valore;
+    c1->valore=c2->valore;
+    c2->valore=aux.valore;
+    aux.seme=c1->seme;
+    c1->seme=c2->seme;
+    c2->seme=aux.seme;
+    aux.nome=c1->nome;
+    c1->nome=c2->nome;
+    c2->nome=aux.nome;
+}
+
+void sort(Carta mano[]) //BubbleSort
+{
+    int i,j;
+    for(i=0;i<6;i++){
+        for(j=6;j>i;j--)
+            if(mano[j].valore > mano[j-1].valore)
+                swap(&mano[j],&mano[j-1]);
+    }
+}
+
+int trovaCartaColore(Carta mano[], int val, char seed)
+{
+    int i;
+    for(i=0;i<7;i++){
+        if(mano[i].valore==14 && mano[i].seme==seed && val==1)
+            return 1;
+        if(mano[i].valore==val && mano[i].seme==seed && val!=1)
+            return 1;
+    }
+    return 0;
+}
+
 
