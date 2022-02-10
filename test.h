@@ -12,4 +12,9 @@ void insTavolo(Carta c[]);
 Carta scanCarta();
 void testPunteggio(Carta mano[]);
 
+int trovaCarta(Carta mano[], int val);
+void swap(Carta * c1, Carta * c2);
+void sort(Carta mano[]);
+int trovaCartaColore(Carta mano[],int val,char seed);
+
 #endif // TEST_H_INCLUDED
