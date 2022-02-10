@@ -43,7 +43,9 @@ int coppia(Carta mano[])
 
         }
     }
-
+    if(max==0)
+        return 0;
+    
     return 1000*max + 100*c1 + 10*c2 + c3;
 }
 
@@ -190,7 +192,7 @@ int full(Carta mano[])
     if(t!=0){
         for(i=0;i<7;i++){
             for(j=0;j<7;j++){
-                if(mano[i].valore==mano[j].valore && i!=j && mano[i].valore!=tris(mano) && mano[i].valore>c)
+                if(mano[i].valore==mano[j].valore && i!=j && mano[i].valore!=t && mano[i].valore>c)
                     c=mano[i].valore; //Trova il valore della coppia
             }
         }
