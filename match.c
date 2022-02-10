@@ -84,79 +84,93 @@ void pescaCarte(Carta mazzo[],Carta mano[],int n) //Pesca le prime n carte del m
     }while(f==0);
 }
 
-Punteggio puntiMano(Giocatori g,Carta tavolo[5]) //Restituisce la struct Punteggio corrispondente alla mano + carte in tavola di un giocatore
-{                                               //Da rivedere (interazione giocatori) (riconoscere giocatori in fold)
+Punteggio puntiMano(Carta mano[]) //Restituisce la struct Punteggio corrispondente a una mano di 7 carte
+{
     int i;
     Punteggio punti;
-    Carta tot[7];
-    for(i=0;i<5;i++)
-        tot[i]=tavolo[i];
-    tot[5]=g->c1;
-    tot[6]=g->c2;
-    if(cartaAlta(tot)){
+    if(cartaAlta(mano)){
         punti.combinazione=0;
-        punti.valore=cartaAlta(tot);
+        punti.valore=cartaAlta(mano);
     }
-    if(coppia(tot)){
+    if(coppia(mano)){
         punti.combinazione=1;
-        punti.valore=coppia(tot);
+        punti.valore=coppia(mano);
     }
-    if(doppiaCoppia(tot)){
+    if(doppiaCoppia(mano)){
         punti.combinazione=2;
-        punti.valore=doppiaCoppia(tot);
+        punti.valore=doppiaCoppia(mano);
     }
-    if(tris(tot)){
+    if(tris(mano)){
         punti.combinazione=3;
-        punti.valore=tris(tot);
+        punti.valore=tris(mano);
     }
-    if(scala(tot)){
+    if(scala(mano)){
         punti.combinazione=4;
-        punti.valore=scala(tot);
+        punti.valore=scala(mano);
     }
-    if(colore(tot)){
+    if(colore(mano)){
         punti.combinazione=5;
-        punti.valore=colore(tot);
+        punti.valore=colore(mano);
     }
-    if(full(tot)){
+    if(full(mano)){
         punti.combinazione=6;
-        punti.valore=full(tot);
+        punti.valore=full(mano);
     }
-    if(poker(tot)){
+    if(poker(mano)){
         punti.combinazione=7;
-        punti.valore=poker(tot);
+        punti.valore=poker(mano);
     }
-    if(scalaColore(tot)){
+    if(scalaColore(mano)){
         punti.combinazione=8;
-        punti.valore=scalaColore(tot);
+        punti.valore=scalaColore(mano);
     }
+
+    return punti;
 }
 
-int vincitoreTurno(Partita p) //Dato un turno, restituisce il numero del giocatore vincente
-{                               //Da rivedere
+Giocatori aggiornaPunteggio(Giocatori g, Carta tavolo[])
+{
+    Giocatori cur;
+    Carta tot[7];
+    Punteggio temp;
     int i;
-    Punteggio * punteggi;
-    Punteggio maxPunteggio;
-    int num,win;
-    maxPunteggio.combinazione=0;
-    maxPunteggio.valore=0;
-    num=numGiocatori(p);
-    punteggi=(Punteggio*)malloc(sizeof(Punteggio)*num);
-    for(i=0;i<num;i++){
-        punteggi[i]=puntiMano(p->g,p->t);
-        p->g=p->g->next;
-    }
-    for(i=0;i<num;i++){
-        if(punteggi[i].combinazione > maxPunteggio.combinazione){
-            maxPunteggio.combinazione=punteggi[i].combinazione;
-            maxPunteggio.valore=punteggi[i].valore;
-            win=i;
+    cur=g;
+
+    while(cur!=NULL){
+        if(g->punti.combinazione == -1){
+            cur->punti.combinazione=0;
+            cur->punti.valore=0;
         }
-        if(punteggi[i].combinazione==maxPunteggio.combinazione && punteggi[i].valore>maxPunteggio.valore){
-            maxPunteggio.valore=punteggi[i].valore;
-            win=i;
+        else{
+            for(i=0;i<5;i++)
+                tot[i]=tavolo[i];
+            tot[5]=cur->c1;
+            tot[6]=cur->c2;
+            temp=puntiMano(tot);
+            cur->punti.combinazione=temp.combinazione;
+            cur->punti.valore=temp.valore;
         }
+        cur=cur->next;
     }
-    return win;
+
+    return g;
+}
+
+Punteggio maxPunteggio(Partita p) //Dato un turno, restituisce il punteggio vincente
+{
+    Punteggio max;
+    max.combinazione=0;
+    max.valore=0;
+    Giocatori cur=p->g;
+    while(cur!=NULL){
+        if(cur->punti.combinazione > max.combinazione){
+            max.combinazione=cur->punti.combinazione;
+            max.valore=cur->punti.valore;
+        }
+        if(cur->punti.combinazione == max.combinazione && cur->punti.valore > max.valore)
+            max.valore=cur->punti.valore;
+    }
+    return max;
 }
 
 void distribuisciCarte(Partita p,Carta mazzo[52])
