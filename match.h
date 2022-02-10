@@ -11,10 +11,10 @@ int numGiocatori(Partita p);
 
 void creaMazzo(Carta mazzo[]);
 void mischia(Carta mazzo[], size_t n);
-void pescaCarte(Carta mazzo[],Carta mano[],int quanteCarte);
+void pescaCarte(Carta mazzo[],Carta * mano,int n);
 
 Punteggio puntiMano(Carta mano[]);
-Giocatori aggiornaPunteggio(Giocatori g, Carta tavolo[]);
+Partita aggiornaPunteggio(Partita p);
 Punteggio maxPunteggio(Partita p);
 
 void distribuisciCarte(Partita p,Carta mazzo[]);
