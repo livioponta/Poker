@@ -13,8 +13,9 @@ void creaMazzo(Carta mazzo[]);
 void mischia(Carta mazzo[], size_t n);
 void pescaCarte(Carta mazzo[],Carta mano[],int quanteCarte);
 
-Punteggio puntiMano(Giocatori g,Carta tavolo[5]);
-int vincitoreTurno(Partita p);
+Punteggio puntiMano(Carta mano[]);
+Giocatori aggiornaPunteggio(Giocatori g, Carta tavolo[]);
+Punteggio maxPunteggio(Partita p);
 
 void distribuisciCarte(Partita p,Carta mazzo[]);
 void distribuisciFlop(Partita p,Carta mazzo[]);
